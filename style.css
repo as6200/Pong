@@ -12,5 +12,10 @@ h1 {
 }
 
 .main-text {
-    padding-left: 30px;
+    padding-bottom: 30px;
+    text-align: center;
+}
+
+.canvas {
+    display:inline;
 }
