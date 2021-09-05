@@ -7,11 +7,14 @@ const HEIGHT = 400;
 //ctx.stroke();
 
 var main = function() {
-    gameEnd = false
-    while (!gameEnd) {
+    var gameLoop = function() {
         update();
         draw();
+
+        window.requestAnimationFrame(gameLoop, canvas);
     }
+
+    window.requestAnimationFrame(gameLoop, canvas);
 }
 
 var update = function() {
