@@ -25,3 +25,5 @@ var draw = function() {
     ctx.fillstyle = '#A52A2A';
     ctx.fillRect(0, 0, WIDTH, HEIGHT);
 }
+
+main();
