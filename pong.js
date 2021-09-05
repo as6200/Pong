@@ -1,12 +1,12 @@
-var canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-const WIDTH = 600;
-const HEIGHT = 400;
 //ctx.moveTo(0,0);
 //ctx.lineTo(600,400);
 //ctx.stroke();
 
 function main () {
+    var canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    const WIDTH = 600;
+    const HEIGHT = 400;
     function gameLoop () {
         draw();
         
