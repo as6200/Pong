@@ -16,6 +16,10 @@ h1 {
     text-align: center;
 }
 
-.canvas {
+.canvas-container {
+    text-align: center;
+}
+
+canvas {
     display:inline;
 }
