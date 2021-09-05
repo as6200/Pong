@@ -17,7 +17,7 @@ function main () {
 }
 
 function draw () {
-    ctx.fillstyle = '#A52A2A';
+    ctx.fillstyle = 'rgb(165, 42, 42)';
     ctx.fillRect(0, 0, WIDTH, HEIGHT);
 }
 
