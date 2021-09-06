@@ -22,27 +22,27 @@ class Player {
         this.draw = function () {
             ctx.fillStyle = this.color;
             ctx.fillRect(this.x, this.y, this.width, this.height);
-        }
+        };
 
         // Updates position of player
         this.update = function () {
             for (let i = 0; i < keyStates.length; i++) {
                 if (keyStates[i] === this.keyUp) {
-                    this.y += this.speed;
-                } else if (keyStates[i] === this.keyDown) {
                     this.y -= this.speed;
+                } else if (keyStates[i] === this.keyDown) {
+                    this.y += this.speed;
                 }
             }
             
-        }
+        };
     }
-};
+}
 
 // Ball object
 ball = {
     x: WIDTH/2,
     y: HEIGHT/2,
-    direction = -1,
+    direction: -1,
     radius: 5,
     color: 'white',
 
@@ -52,7 +52,7 @@ ball = {
         ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
         ctx.fillStyle = this.color;
         ctx.fill();
-        ctx.lineWidth = 5;
+        ctx.lineWidth = 2;
         ctx.stroke();
         ctx.closePath();
     },
