@@ -71,7 +71,9 @@ function main () {
     // Records current keys being pressed and stores in keyStates.
     keyStates = [];
     document.addEventListener("keydown", function(evt) {
-        if (evt.repeat) { return }
+        for (let i = 0; i < keyStates.length; i++) {
+            if (keyStates[i] === evt.key) { return }
+        }
         keyStates.push(evt.key);
     });
     document.addEventListener("keyup", function(evt) {
