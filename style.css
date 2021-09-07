@@ -22,6 +22,5 @@ h1 {
 
 canvas {
     display:inline;
-    border: 5px;
-    border-color: #800000;
+    border: 5px solid #800000;
 }
