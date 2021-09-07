@@ -32,6 +32,12 @@ class Player {
                 } else if (keyStates[i] === this.keyDown) {
                     this.y += this.speed;
                 }
+
+                if (this.y > HEIGHT) {
+                    this.y = HEIGHT;
+                } else if (this.y < 0) {
+                    this.y = 0;
+                }
             }
             
         };
@@ -42,9 +48,12 @@ class Player {
 ball = {
     x: WIDTH/2,
     y: HEIGHT/2,
+    vx = 5,
+    vy = 0,
     direction: -1,
     radius: 5,
     color: 'white',
+    speed: 5,
 
     //Draws circular ball
     draw: function () {
@@ -58,7 +67,9 @@ ball = {
     },
 
     // Updates position of ball
-    update: function () {}
+    update: function () {
+        
+    }
 }
 
 // Main function
