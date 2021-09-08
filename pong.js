@@ -33,8 +33,8 @@ class Player {
                     this.y += this.speed;
                 }
 
-                if (this.y > HEIGHT) {
-                    this.y = HEIGHT;
+                if (this.y + this.height > HEIGHT) {
+                    this.y = HEIGHT - this.height;
                 } else if (this.y < 0) {
                     this.y = 0;
                 }
@@ -48,8 +48,8 @@ class Player {
 ball = {
     x: WIDTH/2,
     y: HEIGHT/2,
-    vx = 5,
-    vy = 0,
+    vx: 5,
+    vy: 0,
     direction: -1,
     radius: 5,
     color: 'white',
@@ -85,6 +85,7 @@ function main () {
         for (let i = 0; i < keyStates.length; i++) {
             if (keyStates[i] === evt.key) { return }
         }
+        
         keyStates.push(evt.key);
     });
     document.addEventListener("keyup", function(evt) {
