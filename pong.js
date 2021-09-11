@@ -21,25 +21,23 @@ class Player {
 
         // Draws player1
         this.draw = function () {
-        	ctx.strokeRect(this.x, this.y, this.width, this.height);
+        		ctx.strokeRect(this.x, this.y, this.width, this.height);
             ctx.fillStyle = this.color;
             ctx.fillRect(this.x, this.y, this.width, this.height);
         };
 
         // Updates position of player1
         this.update = function () {
-            for (let i = 0; i < keyStates.length; i++) {
-                if (keyStates[i] === this.keyUp) {
-                    this.y -= this.speed;
-                } else if (keyStates[i] === this.keyDown) {
-                    this.y += this.speed;
-                }
-
-                if (this.y + this.height > HEIGHT) {
-                    this.y = HEIGHT - this.height;
-                } else if (this.y < 0) {
-                    this.y = 0;
-                }
+        		if (keyStates[this.keyUp]) {
+            		this.y -= this.speed;
+            } else if (keyStates[this.keyDown]) {
+            		this.y += this.speed;
+            } 
+            
+            if (this.y + this.height > HEIGHT) {
+                this.y = HEIGHT - this.height;
+            } else if (this.y < 0) {
+                this.y = 0;
             }
             
         };
@@ -118,7 +116,7 @@ ball = {
 		// x direction
 		if (0 > this.x+this.side || this.x > WIDTH) {
 			this.serve(pdle===player1 ? 1 : -1);
-            pdle === player1 ? scores[1] += 1 : scores[0] += 1;
+      pdle === player1 ? scores[1] += 1 : scores[0] += 1;
 		}
 	},
 
@@ -138,17 +136,25 @@ function main () {
     player2 = new Player(540, HEIGHT/2 - 25, 10, 50, 'white', 7, 'ArrowUp', 'ArrowDown');
 
     // Records current keys being pressed and stores in keyStates.
-    keyStates = [];
-    document.addEventListener("keydown", function(evt) {
-        for (let i = 0; i < keyStates.length; i++) {
-            if (keyStates[i] === evt.key) { return }
-        }
-        
-        keyStates.push(evt.key);
-    });
-    document.addEventListener("keyup", function(evt) {
-        delete keyStates[keyStates.indexOf(evt.key)];
-    });
+    keyStates = {};
+    window.addEventListener("keydown",
+        function(e){
+            keyStates[e.code] = true;
+            for (let i = 0; i < keyStates.length; i++) {
+            		if (keyStates[i] === evt.key) { return }
+        		}
+            switch(e.code){
+                case "ArrowUp": case "ArrowDown": case "ArrowLeft": case "ArrowRight":
+                case "Space": e.preventDefault(); break;
+                default: break; // do not block other keys
+            }
+        },
+    false);
+    window.addEventListener('keyup',
+        function(e){
+            keyStates[e.code] = false;
+        },
+    false);
     
     
 		ball.serve(1);
@@ -182,14 +188,15 @@ function draw () {
     ball.draw()
 
     // Draw "net"
-	var w = 4;
+		var w = 4;
     var x = (WIDTH - w)*0.5;
     var y = 0;
     var step = HEIGHT/20; // how many net segments
     while (y < HEIGHT) {
-		ctx.fillRect(x, y+step*0.25, w, step*0.5);
-		y += step;
+        ctx.fillRect(x, y+step*0.25, w, step*0.5);
+        y += step;
     }
+    
     // Draw scores
     ctx.font = "30px Montserrat";
     ctx.fillStyle = "white";
