@@ -118,6 +118,7 @@ ball = {
 		// x direction
 		if (0 > this.x+this.side || this.x > WIDTH) {
 			this.serve(pdle===player1 ? 1 : -1);
+            pdle === player1 ? scores[1] += 1 : scores[0] += 1;
 		}
 	},
 
@@ -125,7 +126,6 @@ ball = {
 	 * Draw the ball to the canvas
 	 */
 	draw: function() {
-        ctx.strokeRect(this.x, this.y, this.side, this.side);
 		ctx.fillRect(this.x, this.y, this.side, this.side);
 	}
 };
@@ -182,7 +182,21 @@ function draw () {
     ball.draw()
 
     // Draw "net"
-
+	var w = 4;
+    var x = (WIDTH - w)*0.5;
+    var y = 0;
+    var step = HEIGHT/20; // how many net segments
+    while (y < HEIGHT) {
+		ctx.fillRect(x, y+step*0.25, w, step*0.5);
+		y += step;
+    }
+    // Draw scores
+    ctx.font = "30px Montserrat";
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center";
+    ctx.fillText(scores[0], WIDTH * 0.25, 30);
+    ctx.fillText(scores[1], WIDTH * 0.75, 30);
+	
 }
 
 main();
