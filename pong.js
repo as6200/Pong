@@ -132,7 +132,7 @@ ball = {
 function main () {
 
     // Creates 2 player1 instances
-    player1 = new Player(50, HEIGHT/2 - 25, 10, 50, 'white', 7, 'w', 's');
+    player1 = new Player(50, HEIGHT/2 - 25, 10, 50, 'white', 7, 'KeyW', 'KeyS');
     player2 = new Player(540, HEIGHT/2 - 25, 10, 50, 'white', 7, 'ArrowUp', 'ArrowDown');
 
     // Records current keys being pressed and stores in keyStates.
