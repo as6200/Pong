@@ -5,6 +5,7 @@ const WIDTH = 600;
 const HEIGHT = 400;
 const pi = Math.PI;
 var scores = [0, 0]; // player1 1 and 2's score
+var gameStart = false;
 
 // Constructor for player1
 class Player {
@@ -130,43 +131,37 @@ ball = {
 
 // Mplayer2n function
 function main () {
-
+		console.log("test1")
     // Creates 2 player1 instances
     player1 = new Player(50, HEIGHT/2 - 25, 10, 50, 'white', 7, 'KeyW', 'KeyS');
     player2 = new Player(540, HEIGHT/2 - 25, 10, 50, 'white', 7, 'ArrowUp', 'ArrowDown');
+    
+    console.log("test2")
 
     // Records current keys being pressed and stores in keyStates.
     keyStates = {};
-    window.addEventListener("keydown",
-        function(e){
-            keyStates[e.code] = true;
-            for (let i = 0; i < keyStates.length; i++) {
-            		if (keyStates[i] === evt.key) { return }
-        		}
-            switch(e.code){
-                case "ArrowUp": case "ArrowDown": case "ArrowLeft": case "ArrowRight":
-                case "Space": e.preventDefault(); break;
-                default: break; // do not block other keys
-            }
-        },
-    false);
-    window.addEventListener('keyup',
-        function(e){
-            keyStates[e.code] = false;
-        },
-    false);
     
+    window.addEventListener("keydown", keyDownHandler, false);
+    window.addEventListener('keyup', keyUpHandler, false);
+    
+    console.log("test3")
     
 		ball.serve(1);
-    // Mplayer2n loop
+    // Main loop
     function gameLoop () {
         update();
         draw();
-
-        window.requestAnimationFrame(gameLoop, canvas); // Loops it
+				console.log("test6")
+        if (checkWin()) {
+            winScreen();
+            console.log();
+        } else {
+          	window.requestAnimationFrame(gameLoop, canvas); // Loops it
+        }
     }
-
+		console.log("test4")
     window.requestAnimationFrame(gameLoop, canvas); // Starts loop
+    console.log("test5")
 }
 
 // Updates all 3 objects
@@ -206,4 +201,97 @@ function draw () {
 	
 }
 
-main();
+// Checks to see if anyone's won
+function checkWin () {
+		if (scores[0] === 2) {
+    		return player1;
+    } else if (scores[1] === 2) {
+    		return player2;
+    } else {
+    		return null;
+    }
+}
+
+// Win screen
+function winScreen() {
+    ctx.fillStyle = '#800000';
+    ctx.fillRect(0,0,WIDTH,HEIGHT);
+    
+    ctx.font = "30px Montserrat";
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center";
+    winner = checkWin() === player1 ? "Player 1" : "Player 2"
+    winStr = winner + " Wins!!!";
+    ctx.fillText(winStr, WIDTH/2, HEIGHT/3);
+    
+    ctx.fillStyle = "brown";
+    ctx.fillRect(WIDTH/2 - 100, HEIGHT*2/3 - 30, 200, 50);
+    ctx.fillStyle = "white";
+    ctx.fillText("Play Again", WIDTH/2, HEIGHT*2/3);
+    
+    window.removeEventListener("keydown", keyDownHandler, false);
+    window.removeEventListener("keyup", keyUpHandler, false);
+    
+    window.addEventListener("mousedown", winScreenButtonClick, false);
+}
+
+// The start screen
+function startScreen() {
+    ctx.fillStyle = '#800000';
+    ctx.fillRect(0,0,WIDTH,HEIGHT);
+    
+    ctx.font = "30px Montserrat";
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center";
+    ctx.fillText("Hit any key to start", WIDTH/2, HEIGHT/2);
+    
+    window.addEventListener("keydown", startScreenKeyDown)
+}
+
+
+// Handles keyDown
+function keyDownHandler (e) {
+  	keyStates[e.code] = true;
+    
+  	for (let i = 0; i < keyStates.length; i++) {
+    		if (keyStates[i] === evt.key) { return }
+  	}
+    
+  	switch(e.code){
+    		case "ArrowUp": case "ArrowDown": case "ArrowLeft": case "ArrowRight":
+    		case "Space": e.preventDefault(); break;
+    		default: break; // do not block other keys
+  	}
+}
+
+
+// Handles keyUp
+function keyUpHandler (e) {
+ 	 keyStates[e.code] = false;
+}
+
+
+// Checks for startscreen if a key has been pressed
+function startScreenKeyDown (e) {
+		window.removeEventListener("keydown", startScreenKeyDown)
+		main();  
+}
+
+// Checks for win screen if the button is pressed
+function winScreenButtonClick (e) {
+		let getMousePos = function (canvas, evt) {
+        var rect = canvas.getBoundingClientRect();
+        return {
+            x: (evt.clientX - rect.left) / (rect.right - rect.left) * canvas.width,
+            y: (evt.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height
+        };
+		}
+
+		let pos = getMousePos(canvas, e);
+    if (pos.x > WIDTH/2 - 100 && pos.x < WIDTH/2 + 100 && pos.y > HEIGHT*2/3 - 30 && pos.y < HEIGHT*2/3 + 20) {
+    		scores = [0, 0]
+    		main();
+    }
+}
+
+startScreen();
