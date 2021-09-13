@@ -290,6 +290,7 @@ function winScreenButtonClick (e) {
 		let pos = getMousePos(canvas, e);
     if (pos.x > WIDTH/2 - 100 && pos.x < WIDTH/2 + 100 && pos.y > HEIGHT*2/3 - 30 && pos.y < HEIGHT*2/3 + 20) {
     		scores = [0, 0]
+	    	window.removeEventListener("mousedown", winScreenButtonClick, false)
     		main();
     }
 }
