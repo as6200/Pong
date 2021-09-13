@@ -203,9 +203,9 @@ function draw () {
 
 // Checks to see if anyone's won
 function checkWin () {
-		if (scores[0] === 2) {
+		if (scores[0] === 10) {
     		return player1;
-    } else if (scores[1] === 2) {
+    } else if (scores[1] === 10) {
     		return player2;
     } else {
     		return null;
