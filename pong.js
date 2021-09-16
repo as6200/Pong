@@ -52,7 +52,7 @@ ball = {
 	vel: null,
 
 	side:  10,
-	speed: 80,
+	speed: 8,
 
 	/**
 	 * Serves the ball towards the specified side
